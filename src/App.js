@@ -17,28 +17,58 @@ class FretBoard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: "Hello!",
+      value: true,
+      values: Array(5 * 6).fill(true),
     };
   }
 
-  changeMessage(message) {
+  toggleMessage() {
     this.setState({
-      value: message,
+      value: !this.state.value,
     });
   }
-  renderFret() {
+
+  toggleValue(i) {
+    var newValues = this.state.values.slice();
+    newValues[i] = !newValues[i];
+    this.setState({
+      values: newValues,
+    });
+  }
+
+  renderFret(i) {
     return (
       <Fret 
-        value={this.state.value}
-        onClick={() => this.changeMessage("Goodbye!")}
+        key={i.toString()}
+        value={this.state.values[i] ? "Hello!" : "Goodbye!"}
+        onClick={() => this.toggleValue(i)}
       />      
     );
   }
 
-  render() {
+  renderString(j) {
+    const frets = [];
+    const fretsPerString = 5;
+    var i;
+    for (i=0; i < fretsPerString; i++) {
+      frets.push(this.renderFret(j * fretsPerString + i));
+    }
     return (
-      <div>
-        {this.renderFret()}
+      <div className="string" key={j.toString()}>
+        {frets}
+      </div>
+    );
+  }
+
+  render() {
+    const strings = [];
+    var i;
+    for (i = 0; i < 6; i++) {
+      strings.push(this.renderString(i));
+    }
+    return (
+      <div className="fretboard">
+        {strings}
       </div>
     );
   }
