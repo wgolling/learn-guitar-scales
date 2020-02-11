@@ -14,44 +14,21 @@ function Fret(props) {
 }
 
 class FretBoard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: true,
-      values: Array(5 * 6).fill(true),
-    };
-  }
-
-  toggleMessage() {
-    this.setState({
-      value: !this.state.value,
-    });
-  }
-
-  toggleValue(i) {
-    var newValues = this.state.values.slice();
-    newValues[i] = !newValues[i];
-    this.setState({
-      values: newValues,
-    });
-  }
-
   renderFret(i) {
     return (
       <Fret 
         key={i.toString()}
-        value={this.state.values[i] ? "Hello!" : "Goodbye!"}
-        onClick={() => this.toggleValue(i)}
+        value={this.props.values[i] ? "X" : "O"}
+        onClick={() => this.props.onClick(i)}
       />      
     );
   }
 
   renderString(j) {
     const frets = [];
-    const fretsPerString = 5;
     var i;
-    for (i=0; i < fretsPerString; i++) {
-      frets.push(this.renderFret(j * fretsPerString + i));
+    for (i=0; i < this.props.fretsPerString; i++) {
+      frets.push(this.renderFret(j * this.props.fretsPerString + i));
     }
     return (
       <div className="string" key={j.toString()}>
@@ -63,7 +40,7 @@ class FretBoard extends React.Component {
   render() {
     const strings = [];
     var i;
-    for (i = 0; i < 6; i++) {
+    for (i = 0; i < this.props.strings; i++) {
       strings.push(this.renderString(i));
     }
     return (
@@ -73,6 +50,38 @@ class FretBoard extends React.Component {
     );
   }
 }
+
+
+class FretBoardInterface extends React.Component {
+  constructor(props) {
+    super(props);
+    this.strings = 6;
+    this.fretsPerString = 5;
+    this.state = {
+      values: Array(5 * 6).fill(true),
+    };
+  }
+
+  handleClick(i) {
+    var newValues = this.state.values.slice();
+    newValues[i] = !newValues[i];
+    this.setState({
+      values: newValues,
+    });
+  }
+
+  render() {
+    return (
+      <FretBoard 
+        strings={this.strings}  
+        fretsPerString={this.fretsPerString}
+        values={this.state.values}
+        onClick={(i) => this.handleClick(i)}
+      />
+    );
+  }
+}
+
 
 function App() {
   return (
@@ -84,7 +93,7 @@ function App() {
           </p>
         </div>
         <div className="App-fretboard">
-          <FretBoard />
+          <FretBoardInterface />
         </div>
       </header>
     </div>
