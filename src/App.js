@@ -6,21 +6,19 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          This is my project now.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <FretBoard />
       </header>
     </div>
   );
 }
 
+class FretBoard extends React.Component {
+  render() {
+    return (
+      <p>
+        Learn to play guitar scales.
+      </p>
+    );
+  }
+}
 export default App;
