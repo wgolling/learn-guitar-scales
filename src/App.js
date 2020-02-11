@@ -1,24 +1,64 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+
+
+function Fret(props) {
+  return (
+    <button
+      className="fret"
+      onClick={props.onClick}
+    >
+      {props.value}
+    </button>
+  );
+}
+
+class FretBoard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: "Hello!",
+    };
+  }
+
+  changeMessage(message) {
+    this.setState({
+      value: message,
+    });
+  }
+  renderFret() {
+    return (
+      <Fret 
+        value={this.state.value}
+        onClick={() => this.changeMessage("Goodbye!")}
+      />      
+    );
+  }
+
+  render() {
+    return (
+      <div>
+        {this.renderFret()}
+      </div>
+    );
+  }
+}
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <FretBoard />
+        <div>
+          <p>
+            Learn To Play Guitar.
+          </p>
+        </div>
+        <div className="App-fretboard">
+          <FretBoard />
+        </div>
       </header>
     </div>
   );
 }
 
-class FretBoard extends React.Component {
-  render() {
-    return (
-      <p>
-        Learn to play guitar scales.
-      </p>
-    );
-  }
-}
 export default App;
