@@ -18,7 +18,7 @@ class FretBoard extends React.Component {
     return (
       <Fret 
         key={i.toString()}
-        value={this.props.values[i] ? "X" : "O"}
+        value={this.props.values[i] ? "O" : " "}
         onClick={() => this.props.onClick(i)}
       />      
     );
@@ -40,7 +40,7 @@ class FretBoard extends React.Component {
   render() {
     const strings = [];
     var i;
-    for (i = 0; i < this.props.strings; i++) {
+    for (i = this.props.strings - 1; i >= 0; i--) {
       strings.push(this.renderString(i));
     }
     return (
@@ -51,6 +51,63 @@ class FretBoard extends React.Component {
   }
 }
 
+function arrayToScale(notes) {
+  var firstNote = 1;
+  var scale = Array(5 * 6).fill(false);
+  notes.forEach(number => {
+     scale[firstNote + number] = true;
+  });
+  return scale;
+}
+
+class Scale {
+  static modes = {
+    names: [
+      "Empty", 
+      "Ionian", 
+      "Dorian", 
+      "Phrygian", 
+      "Lydian", 
+      "Mixolydian",
+      "Aeolian",
+      "?"
+    ],
+    scales: [
+      [],
+      [0, 2, 4, 5, 7, 9, 11, 12],
+    ],
+  };
+  static mode_names = [
+    "Empty", 
+    "Ionian", 
+    "Dorian", 
+    "Phrygian", 
+    "Lydian", 
+    "Mixolydian",
+    "Aeolian",
+    "?"
+  ];
+  static mode_scales = [
+
+  ]; 
+
+  constructor(name, notes) {
+    this.name = name;
+    this.notes = arrayToScale(notes);
+  }
+
+  static empty() {
+    return new Scale("Empty", []);
+  }
+
+  static mode(scale_mode) {
+    if (scale_mode < 0 || scale_mode >= Scale.modes.names.length) {
+      throw "Mode must be between 0 and 7";
+    }
+    return new Scale(this.modes.names[scale_mode], this.modes.scales[scale_mode]);
+  }
+}
+
 
 class FretBoardInterface extends React.Component {
   constructor(props) {
@@ -58,9 +115,10 @@ class FretBoardInterface extends React.Component {
     this.strings = 6;
     this.fretsPerString = 5;
     this.state = {
-      values: Array(5 * 6).fill(true),
+      values: Scale.mode(1).notes,
     };
   }
+
 
   handleClick(i) {
     var newValues = this.state.values.slice();
