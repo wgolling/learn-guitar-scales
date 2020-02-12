@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import Scale from './Scale.js';
 
 
 function Fret(props) {
@@ -51,75 +52,13 @@ class FretBoard extends React.Component {
   }
 }
 
-function arrayToScale(notes) {
-  var firstNote = 1;
-  var scale = Array(5 * 6).fill(false);
-  notes.forEach(number => {
-     scale[firstNote + number] = true;
-  });
-  return scale;
-}
-function patternToScale(pattern, startingPoint) {
-  var scale = Array(5 * 6).fill(false);
-
-  var spotInPattern = startingPoint;
-  var note = 0;
-  var notesPlaced; 
-  for (notesPlaced = 0; notesPlaced < 15; notesPlaced++) {
-    // console.log("Notes placed: " + notesPlaced);
-    // console.log("Note: " + note);
-    scale[note] = true;
-
-    spotInPattern = spotInPattern % pattern.length;
-    // console.log("Spot in pattern: " + spotInPattern);
-    // console.log("Pattern element: " + pattern[spotInPattern]);
-    note = note + pattern[spotInPattern];
-    // console.log("New note: " + note);
-    spotInPattern++;
-  }
-  // console.log(scale);
-  return scale;
-}
-
-class Scale {
-  static modes = {
-    names: [
-      "Ionian", 
-      "Dorian", 
-      "Phrygian", 
-      "Lydian", 
-      "Mixolydian",
-      "Aeolian",
-      "?"
-    ],
-    pattern: [2, 2, 1, 2, 2, 2, 1],
-  };
-
-  constructor(name, notes) {
-    this.name = name;
-    this.notes = notes;
-  }
-
-  static empty() {
-    return new Scale("Empty", []);
-  }
-
-  static mode(scale_mode) {
-    if (scale_mode < 0 || scale_mode >= Scale.modes.names.length) {
-      throw "Mode must be between 0 and 6";
-    }
-    var notes = patternToScale(this.modes.pattern, scale_mode);
-    return new Scale(this.modes.names[scale_mode], notes);
-  }
-}
-
 
 class FretBoardInterface extends React.Component {
   constructor(props) {
     super(props);
     this.strings = 6;
     this.fretsPerString = 5;
-    var notes = Scale.mode(5).notes.slice();
+    var notes = Scale.mode(3).notes.slice();
     notes.unshift(false);
     notes.splice(4 * this.fretsPerString, 0, false);
     this.state = {
