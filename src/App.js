@@ -14,6 +14,7 @@ function Fret(props) {
   );
 }
 
+
 class FretBoard extends React.Component {
   renderFret(i) {
     return (
@@ -62,13 +63,13 @@ class FretBoardInterface extends React.Component {
     notes.unshift(false);
     notes.splice(4 * this.fretsPerString, 0, false);
     this.state = {
+      mode: Scale.empty(),
       values: notes,
     };
   }
 
 
   handleClick(i) {
-
     var newValues = this.state.values.slice();
     newValues[i] = !newValues[i];
     this.setState({
@@ -76,14 +77,47 @@ class FretBoardInterface extends React.Component {
     });
   }
 
-  render() {
+  changeMode(i) {
+    var scale = Scale.mode(i);
+    var notes = scale.notes.slice();
+    notes.unshift(false);
+    notes.splice(4 * this.fretsPerString, 0, false);
+    this.setState({
+      mode: scale,
+      values: notes,
+    });
+  }
+
+  selectButton(i) {
     return (
-      <FretBoard 
-        strings={this.strings}  
-        fretsPerString={this.fretsPerString}
-        values={this.state.values}
-        onClick={(i) => this.handleClick(i)}
-      />
+      <button 
+        className="select-button" 
+        key={i.toString()} 
+        onClick={() => this.changeMode(i)}
+      >
+        {Scale.modes.names[i]}
+      </button>
+    );
+  }
+
+  render() {
+    var buttons = [];
+    var numberOfModes = Scale.modes.names.length;
+    var i;
+    for (i = 0; i < numberOfModes; i++) {
+      buttons.push(this.selectButton(i));
+    }
+
+    return (
+      <div>
+        <FretBoard 
+          strings={this.strings}  
+          fretsPerString={this.fretsPerString}
+          values={this.state.values}
+          onClick={(i) => this.handleClick(i)}
+        />
+        {buttons}
+      </div>
     );
   }
 }
