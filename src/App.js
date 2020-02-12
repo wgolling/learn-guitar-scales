@@ -59,11 +59,31 @@ function arrayToScale(notes) {
   });
   return scale;
 }
+function patternToScale(pattern, startingPoint) {
+  var scale = Array(5 * 6).fill(false);
+
+  var spotInPattern = startingPoint;
+  var note = 0;
+  var notesPlaced; 
+  for (notesPlaced = 0; notesPlaced < 15; notesPlaced++) {
+    // console.log("Notes placed: " + notesPlaced);
+    // console.log("Note: " + note);
+    scale[note] = true;
+
+    spotInPattern = spotInPattern % pattern.length;
+    // console.log("Spot in pattern: " + spotInPattern);
+    // console.log("Pattern element: " + pattern[spotInPattern]);
+    note = note + pattern[spotInPattern];
+    // console.log("New note: " + note);
+    spotInPattern++;
+  }
+  // console.log(scale);
+  return scale;
+}
 
 class Scale {
   static modes = {
     names: [
-      "Empty", 
       "Ionian", 
       "Dorian", 
       "Phrygian", 
@@ -72,28 +92,12 @@ class Scale {
       "Aeolian",
       "?"
     ],
-    scales: [
-      [],
-      [0, 2, 4, 5, 7, 9, 11, 12],
-    ],
+    pattern: [2, 2, 1, 2, 2, 2, 1],
   };
-  static mode_names = [
-    "Empty", 
-    "Ionian", 
-    "Dorian", 
-    "Phrygian", 
-    "Lydian", 
-    "Mixolydian",
-    "Aeolian",
-    "?"
-  ];
-  static mode_scales = [
-
-  ]; 
 
   constructor(name, notes) {
     this.name = name;
-    this.notes = arrayToScale(notes);
+    this.notes = notes;
   }
 
   static empty() {
@@ -102,9 +106,10 @@ class Scale {
 
   static mode(scale_mode) {
     if (scale_mode < 0 || scale_mode >= Scale.modes.names.length) {
-      throw "Mode must be between 0 and 7";
+      throw "Mode must be between 0 and 6";
     }
-    return new Scale(this.modes.names[scale_mode], this.modes.scales[scale_mode]);
+    var notes = patternToScale(this.modes.pattern, scale_mode);
+    return new Scale(this.modes.names[scale_mode], notes);
   }
 }
 
@@ -114,13 +119,17 @@ class FretBoardInterface extends React.Component {
     super(props);
     this.strings = 6;
     this.fretsPerString = 5;
+    var notes = Scale.mode(5).notes.slice();
+    notes.unshift(false);
+    notes.splice(4 * this.fretsPerString, 0, false);
     this.state = {
-      values: Scale.mode(1).notes,
+      values: notes,
     };
   }
 
 
   handleClick(i) {
+
     var newValues = this.state.values.slice();
     newValues[i] = !newValues[i];
     this.setState({
