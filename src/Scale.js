@@ -25,7 +25,7 @@ class Scale {
   }
 
   static emptyArray() {
-    return Array(24).fill(false);
+    return Array(this.twoOctaves).fill(false);
   }
 
   static mode(scale_mode) {
