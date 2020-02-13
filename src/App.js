@@ -92,6 +92,19 @@ class FretBoardInterface extends React.Component {
     });
   }
 
+  gameOver() { 
+    var a = this.state.notes;
+    var b = this.state.userValues;
+    var assert = require('assert');
+    assert(a.length === b.length);
+    var result = true;
+    var i;
+    for (i = 0; i < this.state.notes.length; i++) {
+      result = result && (a[i] === b[i]);
+    }
+    return result;
+  }
+
   changeMode(m) {
     var scale = Scale.mode(m);
     this.setState({
@@ -135,6 +148,9 @@ class FretBoardInterface extends React.Component {
         {buttons}
         <div>
           {this.state.mode.name}
+        </div>
+        <div>
+          {this.gameOver() ? "Game Over!" : "Keep Trying!"}
         </div>
       </div>
     );

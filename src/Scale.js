@@ -42,7 +42,7 @@ class Scale {
     var spotInPattern = startingPoint;
     var nextNote = 0;
     var i;
-    for (i = 0; i < 24; i++) {
+    for (i = 0; i <= 24; i++) {
       if (i === nextNote) {
         notes[i] = true;
         nextNote += pattern[spotInPattern];
