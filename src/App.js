@@ -17,10 +17,16 @@ function Fret(props) {
 
 class FretBoard extends React.Component {
   renderFret(i) {
+    var value;
+    if (this.props.values[i]) {
+      value = this.props.answers[i] ? "O" : "X";
+    } else {
+      value = " ";
+    }
     return (
       <Fret 
         key={i.toString()}
-        value={this.props.values[i] ? "O" : " "}
+        value={value}
         onClick={() => this.props.onClick(i)}
       />      
     );
@@ -59,48 +65,53 @@ class FretBoardInterface extends React.Component {
     super(props);
     this.strings = 6;
     this.fretsPerString = 5;
-    var notes = Scale.mode(3).notes.slice();
-    notes.unshift(false);
-    notes.splice(4 * this.fretsPerString, 0, false);
+    var empty = Scale.empty();
     this.state = {
-      mode: Scale.empty(),
-      values: notes,
+      mode: empty,
+      notes: FretBoardInterface.scaleToFretboard(empty),
+      userValues: FretBoardInterface.scaleToFretboard(empty),
     };
   }
 
+  static scaleToFretboard(scale) {
+    var notes = scale.notes.slice();
+    notes.unshift(false);                                                    // Start the scale on the second fret.
+    notes.splice(4 * 5, 0, false);                                           // Need to add a shift before the B string.
+    return notes;
+  }
 
   handleClick(i) {
-    var newValues = this.state.values.slice();
+    var newValues = this.state.userValues.slice();
     newValues[i] = !newValues[i];
     this.setState({
-      values: newValues,
+      userValues: newValues,
     });
   }
 
-  changeMode(i) {
-    var scale = Scale.mode(i);
-    var notes = scale.notes.slice();
-    notes.unshift(false);
-    notes.splice(4 * this.fretsPerString, 0, false);
+  changeMode(m) {
+    var scale = Scale.mode(m);
     this.setState({
       mode: scale,
-      values: notes,
+      notes: FretBoardInterface.scaleToFretboard(scale),
     });
   }
 
-  selectButton(i) {
+  selectButton(m) {
     return (
       <button 
         className="select-button" 
-        key={i.toString()} 
-        onClick={() => this.changeMode(i)}
+        key={m.toString()} 
+        onClick={() => this.changeMode(m)}
       >
-        {Scale.modes.names[i]}
+        {Scale.modes.names[m]}
       </button>
     );
   }
 
   render() {
+    console.log(this.state.notes);
+    console.log(this.state.userValues);
+
     var buttons = [];
     var numberOfModes = Scale.modes.names.length;
     var i;
@@ -113,10 +124,14 @@ class FretBoardInterface extends React.Component {
         <FretBoard 
           strings={this.strings}  
           fretsPerString={this.fretsPerString}
-          values={this.state.values}
+          values={this.state.userValues}
+          answers={this.state.notes}
           onClick={(i) => this.handleClick(i)}
         />
         {buttons}
+        <div>
+          {this.state.mode.name}
+        </div>
       </div>
     );
   }
