@@ -1,4 +1,6 @@
 class Scale {
+
+  static twoOctaves = 24;
   
   static modes = {
     names: [
@@ -19,31 +21,36 @@ class Scale {
   }
 
   static empty() {
-    return new Scale("Empty", []);
+    return new Scale("Empty", this.emptyArray());
+  }
+
+  static emptyArray() {
+    return Array(24).fill(false);
   }
 
   static mode(scale_mode) {
     if (scale_mode < 0 || scale_mode >= Scale.modes.names.length) {
       throw new Error("Mode must be between 0 and 6");
     }
-    var notes = this.patternToScale(this.modes.pattern, scale_mode);
-    return new Scale(this.modes.names[scale_mode], notes);
+    return new Scale(this.modes.names[scale_mode], this.patternToNotes(scale_mode));
   }
   
-  static patternToScale(pattern, startingPoint) {
-    var scale = Array(5 * 6).fill(false);
+  static patternToNotes(startingPoint) {
+    var notes = this.emptyArray();    
+    var pattern = this.modes.pattern;
 
     var spotInPattern = startingPoint;
-    var note = 0;
-    var notesPlaced; 
-    for (notesPlaced = 0; notesPlaced < 15; notesPlaced++) {
-      scale[note] = true;
-
-      spotInPattern = spotInPattern % pattern.length;
-      note = note + pattern[spotInPattern];
-      spotInPattern++;
+    var nextNote = 0;
+    var i;
+    for (i = 0; i < 24; i++) {
+      if (i === nextNote) {
+        notes[i] = true;
+        nextNote += pattern[spotInPattern];
+        spotInPattern = (spotInPattern + 1) % pattern.length;
+      }
     }
-    return scale;
+
+    return notes;
   }
 }
 

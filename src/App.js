@@ -77,6 +77,10 @@ class FretBoardInterface extends React.Component {
     var notes = scale.notes.slice();
     notes.unshift(false);                                                    // Start the scale on the second fret.
     notes.splice(4 * 5, 0, false);                                           // Need to add a shift before the B string.
+    var len = 6 * 5 - notes.length;
+    for (len; len > 0; len--) {
+      notes.push(false);
+    }
     return notes;
   }
 
