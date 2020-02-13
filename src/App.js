@@ -3,6 +3,8 @@ import './App.css';
 import Scale from './Scale.js';
 
 
+const assert = require('assert');
+
 function Fret(props) {
   return (
     <button
@@ -95,7 +97,6 @@ class FretBoardInterface extends React.Component {
   gameOver() { 
     var a = this.state.notes;
     var b = this.state.userValues;
-    var assert = require('assert');
     assert(a.length === b.length);
     var result = true;
     var i;
@@ -126,9 +127,6 @@ class FretBoardInterface extends React.Component {
   }
 
   render() {
-    console.log(this.state.notes);
-    console.log(this.state.userValues);
-
     var buttons = [];
     var numberOfModes = Scale.modes.names.length;
     var i;
