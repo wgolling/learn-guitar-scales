@@ -19,16 +19,10 @@ function Fret(props) {
 
 class FretBoard extends React.Component {
   renderFret(i) {
-    var value;
-    if (this.props.values[i]) {
-      value = this.props.answers[i] ? "O" : "X";
-    } else {
-      value = " ";
-    }
     return (
       <Fret 
         key={i.toString()}
-        value={value}
+        value={this.props.marks[i]}
         onClick={() => this.props.onClick(i)}
       />      
     );
@@ -69,9 +63,10 @@ class FretBoardInterface extends React.Component {
     this.fretsPerString = 5;
     var empty = Scale.empty();
     this.state = {
-      mode: empty,
-      notes: FretBoardInterface.scaleToFretboard(empty),
-      userValues: FretBoardInterface.scaleToFretboard(empty),
+      mode:        empty,
+      notes:       FretBoardInterface.scaleToFretboard(empty),
+      userValues:  FretBoardInterface.scaleToFretboard(empty),
+      marks:       FretBoardInterface.scaleToFretboard(empty),
     };
   }
 
@@ -88,29 +83,56 @@ class FretBoardInterface extends React.Component {
 
   handleClick(i) {
     var newValues = this.state.userValues.slice();
+    var newMarks = this.state.marks.slice();
+
     newValues[i] = !newValues[i];
+    if (newValues[i]) {
+      newMarks[i] = this.state.notes[i] ? "O" : "X";
+    } else {
+      newMarks[i] = " ";
+    }
     this.setState({
       userValues: newValues,
+      marks: this.newMark(i, newValues),
     });
   }
 
-  gameOver() { 
-    var a = this.state.notes;
-    var b = this.state.userValues;
-    assert(a.length === b.length);
-    var result = true;
+  setMark(i, values, newMarks) {
+    if (values[i]) {
+      newMarks[i] = this.state.notes[i] ? "O" : "X";      
+    } else {
+      newMarks[i] = " ";
+    }    
+  }
+
+  newMark(i, newValues) {
+    var newMarks = this.state.marks.slice();
+    this.setMark(i, newValues, newMarks);
+    return newMarks;
+  }
+
+  refreshMarks(notes) {
+    var newMarks = this.state.marks.slice();
     var i;
-    for (i = 0; i < this.state.notes.length; i++) {
-      result = result && (a[i] === b[i]);
+    for (i = 0; i < this.state.marks.length; i++) {
+      if (this.state.userValues[i]) {
+        newMarks[i] = notes[i] ? "O" : "X";      
+      } else {
+        newMarks[i] = " ";
+      }    
+      // this.setMark(i, this.state.userValues, newMarks);
     }
-    return result;
+    return newMarks;
   }
 
   changeMode(m) {
-    var scale = Scale.mode(m);
+    var newScale = Scale.mode(m);
+    var newNotes = FretBoardInterface.scaleToFretboard(newScale);
+    var newMarks = this.refreshMarks(newNotes);
     this.setState({
-      mode: scale,
-      notes: FretBoardInterface.scaleToFretboard(scale),
+      mode: newScale,
+      notes: newNotes,
+      marks: newMarks,
     });
   }
 
@@ -126,6 +148,18 @@ class FretBoardInterface extends React.Component {
     );
   }
 
+  gameOver() { 
+    var a = this.state.notes;
+    var b = this.state.userValues;
+    assert(a.length === b.length);
+    var result = true;
+    var i;
+    for (i = 0; i < this.state.notes.length; i++) {
+      result = result && (a[i] === b[i]);
+    }
+    return result;
+  }
+
   render() {
     var buttons = [];
     var numberOfModes = Scale.modes.names.length;
@@ -139,8 +173,7 @@ class FretBoardInterface extends React.Component {
         <FretBoard 
           strings={this.strings}  
           fretsPerString={this.fretsPerString}
-          values={this.state.userValues}
-          answers={this.state.notes}
+          marks={this.state.marks}
           onClick={(i) => this.handleClick(i)}
         />
         {buttons}
@@ -148,7 +181,7 @@ class FretBoardInterface extends React.Component {
           {this.state.mode.name}
         </div>
         <div>
-          {this.gameOver() ? "Game Over!" : "Keep Trying!"}
+          {this.gameOver() ? "You did it!" : "Keep trying!"}
         </div>
       </div>
     );
