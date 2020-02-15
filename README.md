@@ -1,5 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Deployed at: https://wgolling.github.io/learn-guitar-scales/
+
 # Learn Guitar Scales.
 
 This app is being developed for the purpose of learning guitar scales, in particular different "modes". The idea behind a mode in music theory is that you take the standard Major scale, but just start on a diffenet note; for example the Aeolian mode, which starts on the 6-th note of the major scale, is the same scale as the relative Minor.
