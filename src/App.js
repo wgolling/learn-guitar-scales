@@ -83,31 +83,19 @@ class FretBoardInterface extends React.Component {
 
   handleClick(i) {
     var newValues = this.state.userValues.slice();
-    var newMarks = this.state.marks.slice();
-
     newValues[i] = !newValues[i];
-    if (newValues[i]) {
-      newMarks[i] = this.state.notes[i] ? "O" : "X";
-    } else {
-      newMarks[i] = " ";
-    }
+
+    var newMarks = this.newMark(i, newValues);
+
     this.setState({
       userValues: newValues,
-      marks: this.newMark(i, newValues),
+      marks: newMarks,
     });
-  }
-
-  setMark(i, values, newMarks) {
-    if (values[i]) {
-      newMarks[i] = this.state.notes[i] ? "O" : "X";      
-    } else {
-      newMarks[i] = " ";
-    }    
   }
 
   newMark(i, newValues) {
     var newMarks = this.state.marks.slice();
-    this.setMark(i, newValues, newMarks);
+    this.setMark(i, newMarks, newValues, this.state.notes);
     return newMarks;
   }
 
@@ -115,14 +103,17 @@ class FretBoardInterface extends React.Component {
     var newMarks = this.state.marks.slice();
     var i;
     for (i = 0; i < this.state.marks.length; i++) {
-      if (this.state.userValues[i]) {
-        newMarks[i] = notes[i] ? "O" : "X";      
-      } else {
-        newMarks[i] = " ";
-      }    
-      // this.setMark(i, this.state.userValues, newMarks);
+      this.setMark(i, newMarks, this.state.userValues, notes);
     }
     return newMarks;
+  }
+
+  setMark(i, marks, userValues, notes) {
+    if (userValues[i]) {
+      marks[i] = notes[i] ? "O" : "X";      
+    } else {
+      marks[i] = " ";
+    }    
   }
 
   changeMode(m) {
@@ -130,7 +121,7 @@ class FretBoardInterface extends React.Component {
     var newNotes = FretBoardInterface.scaleToFretboard(newScale);
     var newMarks = this.refreshMarks(newNotes);
     this.setState({
-      mode: newScale,
+      mode:  newScale,
       notes: newNotes,
       marks: newMarks,
     });
@@ -205,5 +196,80 @@ function App() {
     </div>
   );
 }
+
+// function TestButton(props) {
+//   return (
+//     <button
+//       className="test-button"
+//       onClick={props.onClick}
+//     >
+//       {props.value}
+//     </button>
+//   );
+
+
+// }
+// class TestButtons extends React.Component {
+//   constructor(props) {
+//     super(props)
+//     this.state = {
+//       clicked: Array(5).fill(false),
+//       display: "No buttons clicked."
+//     }
+//   }
+
+//   handleClick(i){
+//     console.log(i);
+//     var clicked = this.state.clicked.slice();
+//     clicked[i] = !clicked[i];
+//     console.log(clicked);
+//     var clickedIndices = [];
+//     var b;
+//     for (b = 0; b < 5; b++) {
+//       if (clicked[b]) {
+//         clickedIndices.push(b);
+//       }
+//     }
+//     console.log(clickedIndices);
+//     var display;
+//     if (clickedIndices.length === 0) {
+//       display = "No buttons clicked.";
+//     } else {
+//       display = "Clicked buttons: " + clickedIndices.join(', ');
+//     }
+//     console.log(display);
+//     this.setState({
+//       clicked: clicked,
+//       display: display,
+//     });
+//   }
+//   refreshDisplay() {
+
+//   }
+
+//   renderButton(i) {
+//     return(
+//       <TestButton 
+//         key={i.toString()} 
+//         value={i}
+//         onClick={() => this.handleClick(i)}
+//       />
+//     );
+//   }
+
+//   render() {
+//     var buttons = [];
+//     var i;
+//     for (i = 0; i < 5; i++) {
+//       buttons.push(this.renderButton(i));
+//     }
+//     return (
+//       <div>
+//         {buttons}
+//         {this.state.display}
+//       </div>
+//     );
+//   }
+// }
 
 export default App;
