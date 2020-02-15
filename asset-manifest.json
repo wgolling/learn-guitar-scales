@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/learn-scales/static/css/main.83e8a635.chunk.css",
+    "main.js": "/learn-scales/static/js/main.078270f1.chunk.js",
+    "main.js.map": "/learn-scales/static/js/main.078270f1.chunk.js.map",
+    "runtime-main.js": "/learn-scales/static/js/runtime-main.5a1dd339.js",
+    "runtime-main.js.map": "/learn-scales/static/js/runtime-main.5a1dd339.js.map",
+    "static/js/2.1a3816fb.chunk.js": "/learn-scales/static/js/2.1a3816fb.chunk.js",
+    "static/js/2.1a3816fb.chunk.js.map": "/learn-scales/static/js/2.1a3816fb.chunk.js.map",
+    "index.html": "/learn-scales/index.html",
+    "precache-manifest.eef524fdd8a9911f371d0982a9f6a32a.js": "/learn-scales/precache-manifest.eef524fdd8a9911f371d0982a9f6a32a.js",
+    "service-worker.js": "/learn-scales/service-worker.js",
+    "static/css/main.83e8a635.chunk.css.map": "/learn-scales/static/css/main.83e8a635.chunk.css.map",
+    "static/js/2.1a3816fb.chunk.js.LICENSE.txt": "/learn-scales/static/js/2.1a3816fb.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.5a1dd339.js",
+    "static/js/2.1a3816fb.chunk.js",
+    "static/css/main.83e8a635.chunk.css",
+    "static/js/main.078270f1.chunk.js"
+  ]
+}
