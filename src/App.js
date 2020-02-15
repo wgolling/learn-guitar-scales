@@ -2,9 +2,12 @@ import React from 'react';
 import './App.css';
 import Scale from './Scale.js';
 
-
 const assert = require('assert');
 
+
+/*
+ * A functional component representing a fret on a guitar.
+ */
 function Fret(props) {
   return (
     <button
@@ -16,7 +19,9 @@ function Fret(props) {
   );
 }
 
-
+/**
+ * A component representing a guitar fretboard, wrapping an array of Frets.
+ */
 class FretBoard extends React.Component {
   renderFret(i) {
     return (
@@ -28,6 +33,9 @@ class FretBoard extends React.Component {
     );
   }
 
+  /**
+   * Renders a row of Frets.
+   */
   renderString(j) {
     const frets = [];
     var i;
@@ -56,11 +64,22 @@ class FretBoard extends React.Component {
 }
 
 
+/**
+ * A button interface representing a section of a guitar fretboard.
+ * It has 6 strings, and each string has 5 frets.
+ * The user selects which scale they want to test, and the fretboard tells them
+ * whether their selected notes are in the scale or not, with a "O" or and "X".
+ */
 class FretBoardInterface extends React.Component {
+
+  static strings = 6;
+  // The fifth fret on the G string and the first on the B string are the same note.
+  // Taking this into account requires extra logic.
+  static bString = 4;                                                         
+  static fretsPerString = 5;
+
   constructor(props) {
     super(props);
-    this.strings = 6;
-    this.fretsPerString = 5;
     var empty = Scale.empty();
     this.state = {
       mode:        empty,
@@ -70,17 +89,24 @@ class FretBoardInterface extends React.Component {
     };
   }
 
+  /**
+   * Converts a scale object to an array of the appropriate length.
+   */
   static scaleToFretboard(scale) {
     var notes = scale.notes.slice();
     notes.unshift(false);                                                    // Start the scale on the second fret.
-    notes.splice(4 * 5, 0, false);                                           // Need to add a shift before the B string.
-    var len = 6 * 5 - notes.length;
+    notes.splice(this.bString * this.fretsPerString, 0, false);              // Need to add a shift before the B string.
+    var len = this.strings * this.fretsPerString - notes.length;
     for (len; len > 0; len--) {
       notes.push(false);
     }
     return notes;
   }
 
+  /**
+   * Toggles the user's value in fret i and calculates the new marks.
+   * Updates state.
+   */
   handleClick(i) {
     var newValues = this.state.userValues.slice();
     newValues[i] = !newValues[i];
@@ -99,6 +125,11 @@ class FretBoardInterface extends React.Component {
     return marks;
   }
 
+  /**
+   * Changes the mode that the user is testing against.
+   * Preserves the user's input, and recalculates the marks.
+   * Updates state.
+   */
   changeMode(m) {
     var newScale = Scale.mode(m);
     var newNotes = FretBoardInterface.scaleToFretboard(newScale);
@@ -110,6 +141,9 @@ class FretBoardInterface extends React.Component {
     });
   }
 
+  /**
+   * Computes marks array directly by comparing user's input and the notes.
+   */
   refreshMarks(notes) {
     var newMarks = this.state.marks.slice();
     var i;
@@ -119,6 +153,9 @@ class FretBoardInterface extends React.Component {
     return newMarks;
   }
 
+  /**
+   * Button for selecting the mode.
+   */ 
   selectButton(m) {
     return (
       <button 
@@ -131,6 +168,9 @@ class FretBoardInterface extends React.Component {
     );
   }
 
+  /**
+   * Determines if the user has correctly completed the mode.
+   */
   gameOver() { 
     var a = this.state.notes;
     var b = this.state.userValues;
@@ -143,7 +183,11 @@ class FretBoardInterface extends React.Component {
     return result;
   }
 
+  /**
+   * Render.
+   */
   render() {
+    // Make array of mode select buttons.
     var buttons = [];
     var numberOfModes = Scale.modes.names.length;
     var i;
@@ -154,8 +198,8 @@ class FretBoardInterface extends React.Component {
     return (
       <div>
         <FretBoard 
-          strings={this.strings}  
-          fretsPerString={this.fretsPerString}
+          strings={FretBoardInterface.strings}  
+          fretsPerString={FretBoardInterface.fretsPerString}
           marks={this.state.marks}
           onClick={(i) => this.handleClick(i)}
         />
@@ -189,79 +233,5 @@ function App() {
   );
 }
 
-// function TestButton(props) {
-//   return (
-//     <button
-//       className="test-button"
-//       onClick={props.onClick}
-//     >
-//       {props.value}
-//     </button>
-//   );
-
-
-// }
-// class TestButtons extends React.Component {
-//   constructor(props) {
-//     super(props)
-//     this.state = {
-//       clicked: Array(5).fill(false),
-//       display: "No buttons clicked."
-//     }
-//   }
-
-//   handleClick(i){
-//     console.log(i);
-//     var clicked = this.state.clicked.slice();
-//     clicked[i] = !clicked[i];
-//     console.log(clicked);
-//     var clickedIndices = [];
-//     var b;
-//     for (b = 0; b < 5; b++) {
-//       if (clicked[b]) {
-//         clickedIndices.push(b);
-//       }
-//     }
-//     console.log(clickedIndices);
-//     var display;
-//     if (clickedIndices.length === 0) {
-//       display = "No buttons clicked.";
-//     } else {
-//       display = "Clicked buttons: " + clickedIndices.join(', ');
-//     }
-//     console.log(display);
-//     this.setState({
-//       clicked: clicked,
-//       display: display,
-//     });
-//   }
-//   refreshDisplay() {
-
-//   }
-
-//   renderButton(i) {
-//     return(
-//       <TestButton 
-//         key={i.toString()} 
-//         value={i}
-//         onClick={() => this.handleClick(i)}
-//       />
-//     );
-//   }
-
-//   render() {
-//     var buttons = [];
-//     var i;
-//     for (i = 0; i < 5; i++) {
-//       buttons.push(this.renderButton(i));
-//     }
-//     return (
-//       <div>
-//         {buttons}
-//         {this.state.display}
-//       </div>
-//     );
-//   }
-// }
 
 export default App;
