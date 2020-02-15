@@ -84,28 +84,10 @@ class FretBoardInterface extends React.Component {
   handleClick(i) {
     var newValues = this.state.userValues.slice();
     newValues[i] = !newValues[i];
-
-    var newMarks = this.newMark(i, newValues);
-
     this.setState({
       userValues: newValues,
-      marks: newMarks,
+      marks: this.setMark(i, this.state.marks.slice(), newValues, this.state.notes),
     });
-  }
-
-  newMark(i, newValues) {
-    var newMarks = this.state.marks.slice();
-    this.setMark(i, newMarks, newValues, this.state.notes);
-    return newMarks;
-  }
-
-  refreshMarks(notes) {
-    var newMarks = this.state.marks.slice();
-    var i;
-    for (i = 0; i < this.state.marks.length; i++) {
-      this.setMark(i, newMarks, this.state.userValues, notes);
-    }
-    return newMarks;
   }
 
   setMark(i, marks, userValues, notes) {
@@ -114,6 +96,7 @@ class FretBoardInterface extends React.Component {
     } else {
       marks[i] = " ";
     }    
+    return marks;
   }
 
   changeMode(m) {
@@ -125,6 +108,15 @@ class FretBoardInterface extends React.Component {
       notes: newNotes,
       marks: newMarks,
     });
+  }
+
+  refreshMarks(notes) {
+    var newMarks = this.state.marks.slice();
+    var i;
+    for (i = 0; i < this.state.marks.length; i++) {
+      this.setMark(i, newMarks, this.state.userValues, notes);
+    }
+    return newMarks;
   }
 
   selectButton(m) {
