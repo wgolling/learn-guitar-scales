@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/learn-guitar-scales/precache-manifest.a9e175daab70e3552d430d59ef020697.js"
+  "/learn-guitar-scales/precache-manifest.d032be303bb004c2e9158b5ef08d0e98.js"
 );
 
 self.addEventListener('message', (event) => {
