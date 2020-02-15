@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/learn-scales/static/css/main.83e8a635.chunk.css",
-    "main.js": "/learn-scales/static/js/main.078270f1.chunk.js",
-    "main.js.map": "/learn-scales/static/js/main.078270f1.chunk.js.map",
-    "runtime-main.js": "/learn-scales/static/js/runtime-main.5a1dd339.js",
-    "runtime-main.js.map": "/learn-scales/static/js/runtime-main.5a1dd339.js.map",
-    "static/js/2.1a3816fb.chunk.js": "/learn-scales/static/js/2.1a3816fb.chunk.js",
-    "static/js/2.1a3816fb.chunk.js.map": "/learn-scales/static/js/2.1a3816fb.chunk.js.map",
-    "index.html": "/learn-scales/index.html",
-    "precache-manifest.eef524fdd8a9911f371d0982a9f6a32a.js": "/learn-scales/precache-manifest.eef524fdd8a9911f371d0982a9f6a32a.js",
-    "service-worker.js": "/learn-scales/service-worker.js",
-    "static/css/main.83e8a635.chunk.css.map": "/learn-scales/static/css/main.83e8a635.chunk.css.map",
-    "static/js/2.1a3816fb.chunk.js.LICENSE.txt": "/learn-scales/static/js/2.1a3816fb.chunk.js.LICENSE.txt"
+    "main.css": "/learn-guitar-scales/static/css/main.83e8a635.chunk.css",
+    "main.js": "/learn-guitar-scales/static/js/main.7887f651.chunk.js",
+    "main.js.map": "/learn-guitar-scales/static/js/main.7887f651.chunk.js.map",
+    "runtime-main.js": "/learn-guitar-scales/static/js/runtime-main.c9fe47db.js",
+    "runtime-main.js.map": "/learn-guitar-scales/static/js/runtime-main.c9fe47db.js.map",
+    "static/js/2.295a69de.chunk.js": "/learn-guitar-scales/static/js/2.295a69de.chunk.js",
+    "static/js/2.295a69de.chunk.js.map": "/learn-guitar-scales/static/js/2.295a69de.chunk.js.map",
+    "index.html": "/learn-guitar-scales/index.html",
+    "precache-manifest.a9e175daab70e3552d430d59ef020697.js": "/learn-guitar-scales/precache-manifest.a9e175daab70e3552d430d59ef020697.js",
+    "service-worker.js": "/learn-guitar-scales/service-worker.js",
+    "static/css/main.83e8a635.chunk.css.map": "/learn-guitar-scales/static/css/main.83e8a635.chunk.css.map",
+    "static/js/2.295a69de.chunk.js.LICENSE.txt": "/learn-guitar-scales/static/js/2.295a69de.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.5a1dd339.js",
-    "static/js/2.1a3816fb.chunk.js",
+    "static/js/runtime-main.c9fe47db.js",
+    "static/js/2.295a69de.chunk.js",
     "static/css/main.83e8a635.chunk.css",
-    "static/js/main.078270f1.chunk.js"
+    "static/js/main.7887f651.chunk.js"
   ]
 }
