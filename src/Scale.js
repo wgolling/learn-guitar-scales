@@ -14,7 +14,7 @@ class Scale {
       "Lydian", 
       "Mixolydian",
       "Aeolian",
-      "?"
+      "Locrian"
     ],
     // Each mode is based on the same pattern of tones and semi-tones.
     pattern: [2, 2, 1, 2, 2, 2, 1],
