@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f6c4e743a76ba0c03a37dbf368ce7be8",
+    "revision": "5282a8594b4fe8cf268ecc37d3c058b5",
     "url": "/learn-guitar-scales/index.html"
   },
   {
-    "revision": "73f72a16b68e2be3a454",
+    "revision": "d7d1a2ec9da45864d430",
     "url": "/learn-guitar-scales/static/css/main.83e8a635.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/learn-guitar-scales/static/js/2.d251537c.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "73f72a16b68e2be3a454",
-    "url": "/learn-guitar-scales/static/js/main.49dac62c.chunk.js"
+    "revision": "d7d1a2ec9da45864d430",
+    "url": "/learn-guitar-scales/static/js/main.5b6b72cb.chunk.js"
   },
   {
     "revision": "4a8109ea47c3d1e87769",

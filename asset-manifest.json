@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/learn-guitar-scales/static/css/main.83e8a635.chunk.css",
-    "main.js": "/learn-guitar-scales/static/js/main.49dac62c.chunk.js",
-    "main.js.map": "/learn-guitar-scales/static/js/main.49dac62c.chunk.js.map",
+    "main.js": "/learn-guitar-scales/static/js/main.5b6b72cb.chunk.js",
+    "main.js.map": "/learn-guitar-scales/static/js/main.5b6b72cb.chunk.js.map",
     "runtime-main.js": "/learn-guitar-scales/static/js/runtime-main.178da90f.js",
     "runtime-main.js.map": "/learn-guitar-scales/static/js/runtime-main.178da90f.js.map",
     "static/js/2.d251537c.chunk.js": "/learn-guitar-scales/static/js/2.d251537c.chunk.js",
     "static/js/2.d251537c.chunk.js.map": "/learn-guitar-scales/static/js/2.d251537c.chunk.js.map",
     "index.html": "/learn-guitar-scales/index.html",
-    "precache-manifest.d032be303bb004c2e9158b5ef08d0e98.js": "/learn-guitar-scales/precache-manifest.d032be303bb004c2e9158b5ef08d0e98.js",
+    "precache-manifest.033e6e4c13cea9bed9acb2dc16fb341e.js": "/learn-guitar-scales/precache-manifest.033e6e4c13cea9bed9acb2dc16fb341e.js",
     "service-worker.js": "/learn-guitar-scales/service-worker.js",
     "static/css/main.83e8a635.chunk.css.map": "/learn-guitar-scales/static/css/main.83e8a635.chunk.css.map",
     "static/js/2.d251537c.chunk.js.LICENSE.txt": "/learn-guitar-scales/static/js/2.d251537c.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.178da90f.js",
     "static/js/2.d251537c.chunk.js",
     "static/css/main.83e8a635.chunk.css",
-    "static/js/main.49dac62c.chunk.js"
+    "static/js/main.5b6b72cb.chunk.js"
   ]
 }
