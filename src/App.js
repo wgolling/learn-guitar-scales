@@ -154,6 +154,21 @@ class FretBoardInterface extends React.Component {
   }
 
   /**
+   * Determines if the user has correctly completed the mode.
+   */
+  gameOver() { 
+    var a = this.state.notes;
+    var b = this.state.userValues;
+    assert(a.length === b.length);
+    var result = true;
+    var i;
+    for (i = 0; i < this.state.notes.length; i++) {
+      result = result && (a[i] === b[i]);
+    }
+    return result;
+  }
+
+  /**
    * Button for selecting the mode.
    */ 
   selectButton(m) {
@@ -168,19 +183,20 @@ class FretBoardInterface extends React.Component {
     );
   }
 
-  /**
-   * Determines if the user has correctly completed the mode.
-   */
-  gameOver() { 
-    var a = this.state.notes;
-    var b = this.state.userValues;
-    assert(a.length === b.length);
-    var result = true;
+  renderModeSelectButtons() {
+    // Make array of mode select buttons.
+    var buttons = [];
+    var numberOfModes = Scale.modes.names.length;
     var i;
-    for (i = 0; i < this.state.notes.length; i++) {
-      result = result && (a[i] === b[i]);
+    for (i = 0; i < numberOfModes; i++) {
+      buttons.push(this.selectButton(i));
     }
-    return result;
+
+    return (
+      <div>
+        {buttons}
+      </div>
+    );
   }
 
   /**
@@ -203,9 +219,11 @@ class FretBoardInterface extends React.Component {
           marks={this.state.marks}
           onClick={(i) => this.handleClick(i)}
         />
-        {buttons}
         <div>
           {this.state.mode.name}
+        </div>
+        <div>
+          {this.renderModeSelectButtons()}
         </div>
         <div>
           {this.gameOver() ? "You did it!" : "Keep trying!"}
